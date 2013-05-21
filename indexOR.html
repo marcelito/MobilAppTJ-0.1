@@ -1,0 +1,97 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>Aplic. Web de jQuery Mobile</title>
+<link href="jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css"/>
+<link href="css/estilos.css" rel="stylesheet" type="text/css"/>
+<script src="jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="jquery.mobile-1.0.min.js" type="text/javascript"></script>
+</head> 
+<body id="body"> 
+
+<div data-role="page" id="page">
+	<div data-role="header">
+    	<div id="menu">
+        	<div class="item"><a href="#page"><img src="img/ico_home.png" width="32" height="32"></a></div>
+      </div>
+		<div id="logo"><img src="img/logo_todojujuy_movil.png" width="250" height="42"></div>       
+		<script>
+		var ancho = $(window).width() - 20;
+		//Alto automatico.
+		$.getJSON('http://www.todojujuy.com/webservice/index_m?op=loultimo&callback=?',function(data){			
+          $.each(data.respData, function(i,item){
+			  $("<div class='titulo'/>").html(item.titulo).appendTo('#noticia');
+			  $("<div class='fecha'/>").html(item.fecha_hora).appendTo('#noticia');
+			  $("<div class='imagen'/>").html('<a href="#page'+i+'"><img src="http://www.todojujuy.com/imagenes/'+ancho+'x245/strict/img/'+item.imagen+'" width="' + ancho + '" /></a>').appendTo("#noticia");
+			  $("<div class='resumen'/>").html(item.resumen).appendTo("#noticia");
+			  //Creamos la pagina para cada noticia.
+			  $("<div data-role='page' class='pagina' id='page"+i+"'/>").appendTo("#body");
+			  $("<div data-role='header' id='enca"+i+"'/>").appendTo("#page"+i);
+			  $("<h1/>").html('').appendTo("#enca"+i);
+			  $("<a href='#page' data-icon='home' data-iconpos='notext' data-direction='reverse'/>").html('Inicio').appendTo("#enca"+i);
+			  $('<div data-role="content"/>').html('<div class="titulo">'+item.titulo+'</div><div class="fecha">'+item.fecha_hora+'</div><div class="imagen"><img src="http://www.todojujuy.com/imagenes/'+ancho+'x245/strict/img/'+item.imagen+'" width="' + ancho + '" /></div><div class="cuerpo">'+item.cuerpo+'</div>').appendTo("#page"+i);
+			  $('<div data-role="footer"/>').html('TodoJujuy.com Móvil').appendTo("#page"+i);
+          });
+        });
+        </script>
+        <div id="noticia"></div>
+	</div>
+    	<script>
+		$.getJSON('http://www.todojujuy.com/webservice/index_m?op=secciones&callback=?',function(data){			
+          $.each(data.respData, function(i,item){
+			  alert('hola');
+			  $("<li/>").html(item.valor).appendTo('#secciones');
+          });
+        });
+        </script>
+	<div data-role="content">	
+		<ul data-role="listview" id="secciones">        
+			<li><a href="#page1">Seccion dos</a></li>
+<!--            <li><a href="#page3">Seccion tres</a></li>
+			<li><a href="#page4">Seccion cuatro</a></li>-->
+		</ul>		
+	</div>
+	<div data-role="footer">
+		<h4>TodoJujuy.com © 2012 - 2013 - Todos los derechos reservados </h4>
+	</div>
+</div>
+
+<!--<div data-role="page" id="page1">
+	<div data-role="header">
+		<h1>Página dos</h1>
+	</div>
+	<div data-role="content">	
+		Contenido		
+	</div>
+	<div data-role="footer">
+		<h4>Pie de página</h4>
+	</div>
+</div>
+
+<div data-role="page" id="page3">
+	<div data-role="header">
+		<h1>Página tres</h1>
+	</div>
+	<div data-role="content">	
+		Contenido		
+	</div>
+	<div data-role="footer">
+		<h4>Pie de página</h4>
+	</div>
+</div>
+
+<div data-role="page" id="page4">
+	<div data-role="header">
+		<h1>Página cuatro</h1>
+	</div>
+	<div data-role="content">	
+		Contenido		
+	</div>
+	<div data-role="footer">
+		<h4>TodoJujuy.com © 2012 - 2013 - Todos los derechos reservados </h4>
+	</div>
+</div>-->
+
+</body>
+</html>
